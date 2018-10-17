@@ -1,0 +1,17 @@
+﻿*.cache
+*.psess
+*.suo
+*.tmp_proj
+*.user
+*.vspx
+*.tmp
+*.TMP
+_NCrunch*
+**/bin/Debug
+**/bin/Release
+**/obj/Debug
+**/obj/Release
+obj
+packages
+.vs
+.idea
