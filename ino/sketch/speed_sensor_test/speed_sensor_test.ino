@@ -1,4 +1,4 @@
-int speed_sensor_pin = 5;
+int speed_sensor_pin = 1;
 
 int threshold1 = 330;
 int threshold2 = 550;
@@ -31,4 +31,3 @@ void loop()
   Serial.println(fan_speed);
   delay(300);
 }
-

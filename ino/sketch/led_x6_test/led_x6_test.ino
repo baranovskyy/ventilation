@@ -10,7 +10,6 @@ int Fan1Relay = 5;
 int Fan2Relay = 6;
 int Fan3Relay = 7;
 
-
 int delayMs = 3000;
 
 // the setup function runs once when you press reset or power the board
@@ -25,9 +24,16 @@ void setup() {
   pinMode(Fan1Relay, OUTPUT);
   pinMode(Fan2Relay, OUTPUT);
   pinMode(Fan3Relay, OUTPUT);  
+
   digitalWrite(Fan1Relay, HIGH);
   digitalWrite(Fan2Relay, HIGH);
   digitalWrite(Fan3Relay, HIGH);      
+
+  digitalWrite(HumidityLED, LOW);
+  digitalWrite(MotionLED, LOW);
+  digitalWrite(Fan1LED, LOW);  
+  digitalWrite(Fan2LED, LOW);  
+  digitalWrite(Fan3LED, LOW);  
 }
 
 // the loop function runs over and over again forever

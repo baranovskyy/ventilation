@@ -1,0 +1,23 @@
+Arduino pins:
+
+POWER           LED#0 GREEN
+
+Digital
+0  MotionLED    (LED#1, RED, HIGH = ON)
+1  HumidityLED  (LED#2, YELLOW, HIGH = ON)
+2  Fan1LED      (LED#3, YELLOW, HIGH = ON)
+3  Fan3LED      (LED#4, YELLOW, HIGH = ON)
+4  Fan2LED      (LED#5, YELLOW, HIGH = ON)
+5  Fan1Relay    (HIGH = OFF) 
+6  Fan2Relay    (HIGH = OFF)
+7  Fan3Relay    (HIGH = OFF)
+8
+9
+10
+11
+12
+13
+
+Analog
+0   Power sensor from motion detector
+1   Speed switch sensor
