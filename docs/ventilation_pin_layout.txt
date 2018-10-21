@@ -21,3 +21,40 @@ Digital
 Analog
 0   Power sensor from motion detector
 1   Speed switch sensor
+
+CONNECTORS:
+
+==========================
+Controller (sensor) -> Speed switch
+==========================
+BLUE   Common
+RED    1
+GREEN  2
+BLACK  3
+
+FEMALE 2x2 Connector
+(Facing connector with lock on top)
+Upper right  2 GREEN
+Upper Left   1 RED
+Bottom right 3 Black
+Bottom left  Common Blue
+
+
+
+
+
+==========================
+Controller (relay) -> Ventilation box
+==========================
+
+GRAY         Common
+YELLOW/GREEN 1
+BROWN        2
+BLACK        3
+
+MALE 2x2 Connector
+(Facing connector with lock on top)
+Upper right  YELLOW/GREEN 1
+Upper Left   BROWN        2
+Bottom right GRAY         Common
+Bottom left  BLACK        3
