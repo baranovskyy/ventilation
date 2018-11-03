@@ -25,8 +25,9 @@ void loop() {
   
   // Check if any reads failed and exit early (to try again).
   if (isnan(h1) || isnan(t1)) {
-    Serial.println("Failed to read from DHT sensor!");
-    return;
+    Serial.println("Failed to read from DHT sensor 1");
+    h1 = 0;
+    t1 = 0;
   }
 
   // Reading temperature or humidity takes about 250 milliseconds!
@@ -37,8 +38,9 @@ void loop() {
   
   // Check if any reads failed and exit early (to try again).
   if (isnan(h2) || isnan(t2)) {
-    Serial.println("Failed to read from DHT sensor!");
-    return;
+    Serial.println("Failed to read from DHT sensor 2");
+    h2 = 0;
+    t2 = 0;
   }
 
   Serial.print(h1, 1);
