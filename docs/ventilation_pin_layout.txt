@@ -13,14 +13,23 @@ Digital
 7  Fan3Relay    (HIGH = OFF)
 8
 9
-10
-11
+10 DHT22 Sensor1 DATA PIN
+11 DHT22 Sensor2 DATA PIN
 12
 13
 
 Analog
 0   Power sensor from motion detector
 1   Speed switch sensor
+
+
+DHT22 Pins (facing the grill)
+
+1 VDD
+2 DATA
+3 GND
+4 GND
+
 
 CONNECTORS:
 
@@ -58,3 +67,14 @@ Upper right  YELLOW/GREEN 1
 Upper Left   BROWN        2
 Bottom right GRAY         Common
 Bottom left  BLACK        3
+
+
+
+
+==========================
+Controller -> Humidity Sensor (DHT22)
+==========================
+
+BLACK     Ground
+GREEN     DATA
+RED       VDD (+5V)

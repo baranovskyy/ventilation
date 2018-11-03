@@ -1,7 +1,7 @@
 #include "DHT.h"
  
-#define DHT1PIN 8     // what pin we're connected to
-#define DHT2PIN 9     // what pin we're connected to
+#define DHT1PIN 10     // what pin we're connected to
+#define DHT2PIN 11     // what pin we're connected to
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 
 DHT dht1(DHT1PIN, DHTTYPE);
