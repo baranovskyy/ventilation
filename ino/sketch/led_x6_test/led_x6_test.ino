@@ -71,7 +71,7 @@ void loop()
      if(prevSwitchValue != SwitchValue) // change
         SpeedSwitchChanged(SwitchValue);
   }
-  delay(10);
+  delay(30);
 }
 
 void SetFanSpeed0()
