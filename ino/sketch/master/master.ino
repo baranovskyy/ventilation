@@ -1,54 +1,38 @@
-#include "DHT.h"
+#include <DHT.h>
 
+#include "pins.h"
 
-const int MotionLED = 0;
-const int HumidityLED = 1;
-
-const int Fan1LED = 2;
-const int Fan2LED = 4; // lol
-const int Fan3LED = 3;
-
-const int Fan1Relay = 5;
-const int Fan2Relay = 6;
-const int Fan3Relay = 7;
-
-const int PresenceSensorPin = 0;
 const int PresenceSensorThreshold = 870;
-
-const int SpeedSwitchPin = 1;
- 
-const int DHT1PIN = 10;
-const int DHT2PIN = 11;
 const int DHTTYPE = DHT22;   // DHT 22  (AM2302)
 
 const int SpeedSwitchThreshold1 = 330;
 const int SpeedSwitchThreshold2 = 550;
 const int SpeedSwitchThreshold3 = 770;
 
-DHT dht1(DHT1PIN, DHTTYPE);
-DHT dht2(DHT2PIN, DHTTYPE);
+DHT dht1(Pin::DHT1, DHTTYPE);
+DHT dht2(Pin::DHT2, DHTTYPE);
  
 void setup() 
 {
-  pinMode(MotionLED, OUTPUT);
-  pinMode(HumidityLED, OUTPUT);
-  pinMode(Fan1LED, OUTPUT);
-  pinMode(Fan2LED, OUTPUT);
-  pinMode(Fan3LED, OUTPUT);
+  pinMode(Pin::MotionLED, OUTPUT);
+  pinMode(Pin::HumidityLED, OUTPUT);
+  pinMode(Pin::Fan1LED, OUTPUT);
+  pinMode(Pin::Fan2LED, OUTPUT);
+  pinMode(Pin::Fan3LED, OUTPUT);
 
-  pinMode(Fan1Relay, OUTPUT);
-  pinMode(Fan2Relay, OUTPUT);
-  pinMode(Fan3Relay, OUTPUT);  
+  pinMode(Pin::RelayTrickle, OUTPUT);
+  pinMode(Pin::RelayNormal, OUTPUT);
+  pinMode(Pin::RelayBoost, OUTPUT);  
 
-  digitalWrite(Fan1Relay, HIGH);
-  digitalWrite(Fan2Relay, HIGH);
-  digitalWrite(Fan3Relay, HIGH);      
+  digitalWrite(Pin::RelayTrickle, HIGH);
+  digitalWrite(Pin::RelayNormal, HIGH);
+  digitalWrite(Pin::RelayBoost, HIGH);      
 
-  digitalWrite(HumidityLED, LOW);
-  digitalWrite(MotionLED, LOW);
-  digitalWrite(Fan1LED, LOW);  
-  digitalWrite(Fan2LED, LOW);  
-  digitalWrite(Fan3LED, LOW);  
+  digitalWrite(Pin::HumidityLED, LOW);
+  digitalWrite(Pin::MotionLED, LOW);
+  digitalWrite(Pin::Fan1LED, LOW);  
+  digitalWrite(Pin::Fan2LED, LOW);  
+  digitalWrite(Pin::Fan3LED, LOW);  
 
   Serial.begin(57600); 
   dht1.begin();
@@ -66,50 +50,49 @@ int ConvertSwitchReading(int rawValue)
   return 3;
 }
 
-
 void SetFanSpeed0()
 {
-  digitalWrite(Fan1LED, LOW);  
-  digitalWrite(Fan2LED, LOW);  
-  digitalWrite(Fan3LED, LOW);
+  digitalWrite(Pin::Fan1LED, LOW);
+  digitalWrite(Pin::Fan2LED, LOW);
+  digitalWrite(Pin::Fan3LED, LOW);
   
-  digitalWrite(Fan1Relay, HIGH);
-  digitalWrite(Fan2Relay, HIGH);
-  digitalWrite(Fan3Relay, HIGH);      
+  digitalWrite(Pin::RelayTrickle, HIGH);
+  digitalWrite(Pin::RelayNormal, HIGH);
+  digitalWrite(Pin::RelayBoost, HIGH);      
 }
 
 void SetFanSpeed1()
 {
-  digitalWrite(Fan1LED, HIGH);  
-  digitalWrite(Fan2LED, LOW);  
-  digitalWrite(Fan3LED, LOW);
+  digitalWrite(Pin::Fan1LED, HIGH);  
+  digitalWrite(Pin::Fan2LED, LOW);  
+  digitalWrite(Pin::Fan3LED, LOW);
   
-  digitalWrite(Fan1Relay, LOW);
-  digitalWrite(Fan2Relay, HIGH);
-  digitalWrite(Fan3Relay, HIGH);      
+  digitalWrite(Pin::RelayTrickle, LOW);
+  digitalWrite(Pin::RelayNormal, HIGH);
+  digitalWrite(Pin::RelayBoost, HIGH);      
 }
 
 void SetFanSpeed2()
 {
-  digitalWrite(Fan1LED, HIGH);  
-  digitalWrite(Fan2LED, HIGH);  
-  digitalWrite(Fan3LED, LOW);
+  digitalWrite(Pin::Fan1LED, HIGH);  
+  digitalWrite(Pin::Fan2LED, HIGH);  
+  digitalWrite(Pin::Fan3LED, LOW);
   
-  digitalWrite(Fan1Relay, HIGH);
-  digitalWrite(Fan2Relay, LOW);
-  digitalWrite(Fan3Relay, HIGH);      
+  digitalWrite(Pin::RelayTrickle, HIGH);
+  digitalWrite(Pin::RelayNormal, LOW);
+  digitalWrite(Pin::RelayBoost, HIGH);      
 }
 
 
 void SetFanSpeed3()
 {
-  digitalWrite(Fan1LED, HIGH);  
-  digitalWrite(Fan2LED, HIGH);  
-  digitalWrite(Fan3LED, HIGH);
+  digitalWrite(Pin::Fan1LED, HIGH);  
+  digitalWrite(Pin::Fan2LED, HIGH);  
+  digitalWrite(Pin::Fan3LED, HIGH);
   
-  digitalWrite(Fan1Relay, HIGH);
-  digitalWrite(Fan2Relay, HIGH);
-  digitalWrite(Fan3Relay, LOW);      
+  digitalWrite(Pin::RelayTrickle, HIGH);
+  digitalWrite(Pin::RelayNormal, HIGH);
+  digitalWrite(Pin::RelayBoost, LOW);      
 }
 
 void SpeedSwitchChanged(int switchValue)
