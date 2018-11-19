@@ -11,32 +11,47 @@ const int SpeedSwitchThreshold3 = 770;
 
 DHT dht1(Pin::DHT1, DHTTYPE);
 DHT dht2(Pin::DHT2, DHTTYPE);
- 
+
+void initRelay()
+{
+  pinMode(Pin::RelayTrickle, OUTPUT);
+  pinMode(Pin::RelayNormal, OUTPUT);
+  pinMode(Pin::RelayBoost, OUTPUT);  
+  // make sure it's switched off
+  digitalWrite(Pin::RelayTrickle, HIGH);
+  digitalWrite(Pin::RelayNormal, HIGH);
+  digitalWrite(Pin::RelayBoost, HIGH);      
+}
+
+void writeToAllLeds(byte val)
+{
+  digitalWrite(Pin::HumidityLED, val);
+  digitalWrite(Pin::MotionLED, val);
+  digitalWrite(Pin::Fan1LED, val);  
+  digitalWrite(Pin::Fan2LED, val);
+  digitalWrite(Pin::Fan3LED, val);  
+}
+
 void setup() 
 {
+  Serial.begin(57600); // needs to be done before LED init as it uses same leds...
+  
   pinMode(Pin::MotionLED, OUTPUT);
   pinMode(Pin::HumidityLED, OUTPUT);
   pinMode(Pin::Fan1LED, OUTPUT);
   pinMode(Pin::Fan2LED, OUTPUT);
   pinMode(Pin::Fan3LED, OUTPUT);
 
-  pinMode(Pin::RelayTrickle, OUTPUT);
-  pinMode(Pin::RelayNormal, OUTPUT);
-  pinMode(Pin::RelayBoost, OUTPUT);  
+  // LED blink
+  writeToAllLeds(HIGH);
 
-  digitalWrite(Pin::RelayTrickle, HIGH);
-  digitalWrite(Pin::RelayNormal, HIGH);
-  digitalWrite(Pin::RelayBoost, HIGH);      
+  initRelay();
 
-  digitalWrite(Pin::HumidityLED, LOW);
-  digitalWrite(Pin::MotionLED, LOW);
-  digitalWrite(Pin::Fan1LED, LOW);  
-  digitalWrite(Pin::Fan2LED, LOW);  
-  digitalWrite(Pin::Fan3LED, LOW);  
-
-  Serial.begin(57600); 
   dht1.begin();
   dht2.begin();
+  
+  delay(3500);
+  writeToAllLeds(LOW);
 }
 
 int ConvertSwitchReading(int rawValue)
@@ -113,17 +128,29 @@ void SpeedSwitchChanged(int switchValue)
        break;
    }
 }
- 
+
 void loop() 
 {
+  unsigned long time11, time12, time13;
+  unsigned long time21, time22, time23;
+
   // Wait a few seconds between measurements.
-  delay(2000);
- 
+  delay(1000);
+   delay(1000);
+   
   // Reading temperature or humidity takes about 250 milliseconds!
   // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
+
+  time11 = millis();
+  
   float h1 = dht1.readHumidity();
+
+  time12 = millis();
+  
   // Read temperature as Celsius
   float t1 = dht1.readTemperature();
+
+  time13 = millis();
   
   // Check if any reads failed and exit early (to try again).
   if (isnan(h1) || isnan(t1)) {
@@ -134,9 +161,17 @@ void loop()
 
   // Reading temperature or humidity takes about 250 milliseconds!
   // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
+
+  time21 = millis();
+  
   float h2 = dht2.readHumidity();
+
+  time22 = millis();
+  
   // Read temperature as Celsius
   float t2 = dht2.readTemperature();
+
+  time23 = millis();
   
   // Check if any reads failed and exit early (to try again).
   if (isnan(h2) || isnan(t2)) {
@@ -152,5 +187,13 @@ void loop()
   Serial.print(h2, 1);
   Serial.print("%");
   Serial.print(t2, 1);
+  Serial.println();
+  Serial.print(time12-time11);
+  Serial.print(",");
+  Serial.print(time13-time12);
+  Serial.print("; ");
+  Serial.print(time22-time21);
+  Serial.print(",");
+  Serial.print(time23-time22);
   Serial.println();
 }

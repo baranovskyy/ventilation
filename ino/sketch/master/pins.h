@@ -1,7 +1,7 @@
 namespace Pin
 {
-   const int MotionLED = 0;
-   const int HumidityLED = 1;
+   const int MotionLED = 12;
+   const int HumidityLED = 13;
    const int Fan1LED = 2;
    const int Fan2LED = 4; // lol
    const int Fan3LED = 3;
