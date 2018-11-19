@@ -1,3 +1,6 @@
+#ifndef _PINS_H_
+#define _PINS_H_
+
 namespace Pin
 {
    const int MotionLED = 12;
@@ -17,3 +20,5 @@ namespace Pin
    const int DHT1 = 10;
    const int DHT2 = 11;
 }
+
+#endif
