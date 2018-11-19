@@ -1,11 +1,9 @@
-#include <DHT.h>
-
 #include "pins.h"
 #include "Stats.h"
 #include "SpeedSwitch.h"
+#include <DHT.h>
 
 const int PresenceSensorThreshold = 870;
-const int DHTTYPE = DHT22;   
 
 // Two DHT 22 (AM2302) sensors 
 DHT dht1(Pin::DHT1, DHT22);
@@ -46,8 +44,6 @@ void setup()
 
   initRelay();
 
-  dht1.begin();
-  dht2.begin();
   
   delay(500);
   writeToAllLeds(LOW);
@@ -68,23 +64,10 @@ void SetFanSpeed(int speed)
   digitalWrite(Pin::RelayBoost,   speed == 3 ? LOW : HIGH);      
 }
 
-struct DhtSample
-{
-  // relative humidity in 0.1 percent
-  // value of 1000 corresponds to 100%
-  int Humidity;
-  // relative humidity in 0.1 degrees
-  // value of 200 corresponds to 20 degrees
-  int Temperature;
-};
+LayeredMinBuffer buffer_h1;
 
 void loop() 
 {
-  SetFanSpeed(0);
-
-  // Wait a few seconds between measurements.
-  delay(1000);
-
   float h1 = dht1.readHumidity();
   // Read temperature as Celsius
   float t1 = dht1.readTemperature();
@@ -97,27 +80,22 @@ void loop()
     t1 = 0;
   }
 
-  // Reading temperature or humidity takes about 250 milliseconds!
-  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-
-  float h2 = dht2.readHumidity();
-  // Read temperature as Celsius
-  float t2 = dht2.readTemperature();
-
-  // Check if any reads failed and exit early (to try again).
-  if (isnan(h2) || isnan(t2)) 
+  if(h1 > 0)
   {
-    Serial.println("Failed to read from DHT sensor 2");
-    h2 = 0;
-    t2 = 0;
-  }
+    short value = h1*10 + 0.5;
+    Serial.print(value);
+    
+    // update rolling minimum
 
-  Serial.print(h1, 1);
-  Serial.print("%");
-  Serial.print(t1, 1);
-  Serial.print("   ");
-  Serial.print(h2, 1);
-  Serial.print("%");
-  Serial.print(t2, 1);
-  Serial.println();
+    if(buffer_h1.Add(value))
+    {
+      Serial.print(" | Buffer1 is ready: Min=");
+      Serial.println(buffer_h1.Min());
+    }
+    else
+    {
+      Serial.println(" | Buffer1 is not ready");
+    }
+  }
+  delay(2500);
 }

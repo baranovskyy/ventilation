@@ -3,31 +3,31 @@
 
 namespace Stats
 {
-  int Min(int * data, int len);
+  short Min(short * data, int len);
 }
 class MinBuffer
 {
 private:
-  const static int Size = 32;
-  int _data[Size];
+  const static int Size = 16;
+  short _data[Size];
   bool _ready;
   int _pos;
 public:
   MinBuffer();
-  bool Add(int value);
-  int Min();
+  bool Add(short value);
+  short Min();
   bool IsReady();
 };
 
 class LayeredMinBuffer
 {
 private:
-  const static int Size = 32;  
+  const static int Size = 3;  
   MinBuffer _buffers[Size];
 public:
-  void Add(int value);
+  bool Add(short value);
   bool IsReady();
-  int Min();
+  short Min();
 };
 
 

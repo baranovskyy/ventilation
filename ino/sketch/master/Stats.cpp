@@ -1,8 +1,8 @@
 #include "Stats.h"
 
-int Stats::Min(int * data, int len)
+short Stats::Min(short * data, int len)
 {
-   int m = 9999;
+   short m = 9999;
    for(int i = 0; i<len; ++i)
       if(data[i] < m)
          m = data[i];
@@ -15,17 +15,17 @@ MinBuffer::MinBuffer()
   _ready = false;
 }
 
-bool MinBuffer::Add(int value)
+bool MinBuffer::Add(short value)
 {
-  _data[_pos++] = value;
-  if(_pos < Size)
+  _data[_pos] = value;
+  if(++_pos < Size)
     return false;
   _pos = 0;
   _ready = true;
   return true;
 }
 
-int MinBuffer::Min()
+short MinBuffer::Min()
 {
   return Stats::Min(_data, Size);
 }
@@ -35,14 +35,15 @@ bool MinBuffer::IsReady()
   return _ready;
 }
 
-void LayeredMinBuffer::Add(int value)
+bool LayeredMinBuffer::Add(short value)
 {
   for(int i=0; i<Size; ++i)
   {
     if(!_buffers[i].Add(value))
-       return;
+       break;
     value = _buffers[i].Min();
   }
+  return IsReady();
 }
 
 bool LayeredMinBuffer::IsReady()
@@ -53,9 +54,9 @@ bool LayeredMinBuffer::IsReady()
   return false;
 }
 
-int LayeredMinBuffer::Min()
+short LayeredMinBuffer::Min()
 {
-  for(int i=Size-1; i>0; --i)
+  for(int i=Size-1; i>=0; --i)
      if(_buffers[i].IsReady())
         return _buffers[i].Min();
   return 0;
